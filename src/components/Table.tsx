@@ -52,8 +52,8 @@ export default function Table({ data, columns, service, onDelete, onChangeStatus
                       </td>
                       {columns.map((column: any, index: number) => (
 
-                        <td key={index} className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{item[column]}</div>
+                        <td key={index} className="px-6 py-4 whitespace-nowrap ">
+                          <div className="text-sm text-gray-900 text-ellipsis overflow-hidden">{item[column]}</div>
                         </td>
                       ))}
                       <td className="px-6 py-4 whitespace-nowrap text-right flex justify-evenly text-sm font-medium">

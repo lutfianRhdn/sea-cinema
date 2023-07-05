@@ -14,5 +14,4 @@ export default async function handler(
     take: 10,
   });
   return response(res, 200, 'success get movies playing', movies);
-  // return response(res, 200, 'Hello World!');
 }

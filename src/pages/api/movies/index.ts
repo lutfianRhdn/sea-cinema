@@ -23,5 +23,4 @@ export default async function handler(
       return response(res, 405, 'Method not allowed');
   }
 
-  // return response(res, 200, 'Hello World!');
 }

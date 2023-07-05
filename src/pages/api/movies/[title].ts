@@ -13,5 +13,4 @@ export default async function handler(
   });
   return response(res, 200, 'success get data', movies);
 
-  // return response(res, 200, 'Hello World!');
 }

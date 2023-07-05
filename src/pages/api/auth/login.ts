@@ -11,7 +11,7 @@ export default async function handler(
 ) {
   try {
     const { username, password } = req.body;
-    const user:any = await prisma.user.findFirst({ where: { username } });
+    const user: any = await prisma.user.findFirst({ where: { username } });
     if (!user) return response(res, 400, 'username / password salah', {});
     if (!compareSync(password, user.password))
       return response(res, 400, 'username / password salah', {});

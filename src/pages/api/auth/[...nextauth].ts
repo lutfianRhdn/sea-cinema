@@ -4,7 +4,6 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: NextAuthOptions = {
-  // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -18,11 +17,14 @@ export const authOptions: NextAuthOptions = {
           username,
           password,
         });
-        if (!user) throw new Error('No user found');
+        console.log({user})
+        if (user.status !== 200) {
+          throw new Error(user.message)
+        };
+        
         return user;
       },
     }),
-    // ...add more providers here
   ],
   session: {
     strategy: 'jwt',
@@ -33,7 +35,6 @@ export const authOptions: NextAuthOptions = {
       return { ...token, ...user };
     },
     async session({ session, token, user }) {
-      // Send properties to the client, like an access_token from a provider.
       session.user = token;
 
       return session;

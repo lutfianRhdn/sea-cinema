@@ -17,6 +17,5 @@ export default async function handler(
       }
     },
   });
-  console.log(tickets)
   return response(res, 200, 'Hello World!', tickets);
 }

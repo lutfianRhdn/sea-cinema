@@ -8,5 +8,4 @@ export default async function handler(
   const users = await prisma.movie_time.findMany();
   return response(res, 200, 'success get data', users);
 
-  // return response(res, 200, 'Hello World!');
 }

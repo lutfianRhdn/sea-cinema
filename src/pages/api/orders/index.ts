@@ -9,8 +9,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   switch (req.method) {
-    case 'GET':
-    // return getOrders(req, res);
     case 'POST':
       const { movie_id, movie_time_id, seats, time }: Transaction = req.body;
       const movie = await prisma.movie.findFirst({ where: { id: movie_id } });

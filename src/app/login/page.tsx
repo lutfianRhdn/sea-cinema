@@ -11,7 +11,7 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 export default function Login() {
   const [inputs, setInputs]: any = useState([])
-  const [errors, setErrors]: any = useState({ username: "", password: "" })
+  const [errors, setErrors]: any = useState({ })
   const [isShownTost, setIsShownTost] = useState<boolean>(false)
   const { data: session } = useSession()
 
@@ -30,18 +30,22 @@ export default function Login() {
     e.preventDefault()
     if (!inputs.username || !inputs.password) {
       setIsShownTost(true)
-      setErrors({ ...errors, messge: "username dan password tidak boleh kosong" })
+      setErrors({ ...errors, message: "username dan password tidak boleh kosong" })
       return
     }
-    await signIn('credentials', {
+      signIn('credentials', {
       username: inputs.username,
       password: inputs.password,
-      callbackUrl: '/movies'
-    })
+      redirect:false
+      }).then(({ok,error}:any) => {
+        setErrors({ message: error })
+      setIsShownTost(true)
+      })
 
   }
   return (
     <>
+      {}
       <div className="flex justify-center items-center h-screen mx-auto">
         <div
           className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700 min-w-[24rem]">
@@ -51,7 +55,7 @@ export default function Login() {
               <FontAwesomeIcon icon={faArrowLeft} className="text-gray-100  mr-5" />
               <h3 className="text-xl font-medium text-gray-900 dark:text-white">Login</h3>
             </div>
-            {isShownTost && <Tost onClick={() => setIsShownTost(!isShownTost)} type="error" message={errors.messge} />}
+            {isShownTost && <Tost onClick={() => setIsShownTost(!isShownTost)} type="error" message={errors.message} />}
             <InputForm name="username" placeholder="plase type usernmae" text="username" value={inputs.username} onChange={(value: string) => handleChange(value, 'username')} errorMessage={errors.username} />
             <InputForm name="password" placeholder="please type password" type="password" text="password" value={inputs.password} onChange={(value: string) => handleChange(value, 'password')} errorMessage={errors.password} />
             <div className="flex items-start">

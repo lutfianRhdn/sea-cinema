@@ -23,10 +23,12 @@ export default function Home() {
     <div className=" py-2 flex flex-col gap-10">
       <div className="flex flex-col">
         <h1 className="text-3xl font-bold"> Sedang Tayang</h1>
+        <Slider options={{ dragFree: false }}>
+
         {moviesPlaying.map((movie: Movie, index: number) => (
           <Card age_rating={movie.age_rating} key={index} description={movie.description} id={movie.id} poster_url={movie.poster_url} release_date={movie.release_date} ticket_price={movie.ticket_price} title={movie.title} />
         ))}
-
+</Slider>
       </div >
       <div className="flex flex-col">
         <h1 className="text-3xl font-bold"> Akan Datang</h1>

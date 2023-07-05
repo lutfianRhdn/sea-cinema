@@ -14,5 +14,4 @@ export default async function handler(
   });
   return response(res, 200, 'success get data', users);
 
-  // return response(res, 200, 'Hello World!');
 }

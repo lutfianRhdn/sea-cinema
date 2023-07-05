@@ -16,7 +16,6 @@ export default async function handler(
         release_date,
         ticket_price,
       } = req.body;
-      console.log(req.body);
       const movie = await prisma.movie.update({
         where: { id },
         data: {
@@ -30,6 +29,5 @@ export default async function handler(
       });
       return response(res, 200, 'success create new movie', movie);
     default:
-    // res.redirect('/notfound');
   }
 }

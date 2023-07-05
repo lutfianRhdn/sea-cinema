@@ -11,5 +11,4 @@ export default async function handler(
   const user = await prisma.user.findFirst({ where: { id: userDecoded.id } });
   return response(res, 200, 'success get data', user);
 
-  // return response(res, 200, 'Hello World!');
 }

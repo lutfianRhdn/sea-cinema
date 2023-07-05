@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import Button from "@/components/Button";
+import Tost from "@/components/Tost";
 import { fetchData } from "@/utils";
 import { useSession } from "next-auth/react";
 import { useQRCode } from "next-qrcode";
@@ -10,15 +11,30 @@ import { useEffect, useState } from "react";
 export default function MyTickets() {
   const [tickets, setTickets] = useState([])
   const { data: session } = useSession()
+  const [isRefresh, setIsRefresh] = useState(false)
+  const [isShownTost,setIsShownTost] = useState(false)
   const { Canvas } = useQRCode();
   useEffect(() => {
-    // const { data: user }: any = session?.user
-    fetchData('/my-tickets', 'GET', {}, session?.user?.data.token).then(res => {
+    if(!!!session)return
+    const { data: user }: any = session?.user
+    fetchData('/my-tickets', 'GET', {}, user.token).then(res => {
       setTickets(res.data)
     })
-  }, [session])
+    setIsRefresh(false)
+  }, [session,isRefresh])
+  const handleRefund = async (id: string) => {
+    const { data: user }: any = session?.user
+    console.log('refund')
+    const response = await fetchData(`/my-tickets/refund/${id}`, "POST", {}, user.token)
+    console.log(response)
+    if (response) { 
+      setIsRefresh(true)
+      setIsShownTost(true)
+    }
+  }
   return (
     <>
+      {isShownTost && (<Tost message="Tiket Berhasil dibatalkan!" onClick={()=>setIsShownTost(false)} type="info" />)}
       <div className="flex flex-col">
         <h1 className="text-2xl font-semibold">Tiket Saya</h1>
         <div className="flex flex-row gap-5 my-4 flex-wrap ">
@@ -28,7 +44,7 @@ export default function MyTickets() {
               <div className="w-96  gap-5   rounded-xl shadow-lg">
 
                 {/* body */}
-                <div className="h-[20rem] px-5 py-3 bg-white w-full rounded-t-2xl ">
+                <div className="min-h-[20rem] px-5 py-3 bg-white w-full rounded-t-2xl ">
                   <div className="flex flex-col  ">
                     <div className="flex flex-row justify-between items-center gap-5">
                       <div className="flex">
@@ -80,7 +96,7 @@ export default function MyTickets() {
                     </div>
                   </div>
                   <div className="mt-10">
-                    <Button text="Batalkan" className="bg-gray-900 w-full" isLink={false} onClick={() => { }} />
+                    <Button text="Batalkan" className="bg-gray-900 w-full" isLink={false} onClick={() => handleRefund(ticket.id)} />
                   </div>
               </div>
             </div>

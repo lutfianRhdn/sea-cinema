@@ -50,13 +50,11 @@ enum MovieTimeStatus {
 model Ticket{
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   ticket_code   String   @unique 
-  // user_id  String  @db.ObjectId
   seats         String
   transaction_id  String @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   transaction Transaction @relation(fields: [transaction_id], references: [id])
-  // shown_times Movie_time @relation(fields: [show_time_id], references: [id])
 }
 
 model Transaction{
@@ -73,9 +71,7 @@ model Transaction{
   type                TransactionType
   total_amount              Int
   user User @relation(fields: [user_id], references: [id])
-  // movie_times 
   movie Movie? @relation(fields: [movie_id], references: [id])
-  // ticket Ticket[]
 }
 
 model Movie{
@@ -88,13 +84,12 @@ model Movie{
   release_date        String
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
-
   movie_times         Movie_time?
   transactions        Transaction[]
-
 }
 enum TransactionType {
   topup
   buy
   withdraw
+  refund
 }

@@ -11,20 +11,20 @@ export default function AdminMovies() {
   const [movies, setMovies] = useState([])
   const { data: session } = useSession()
   const [isShownTost, setIsShownTost] = useState<boolean>(false)
+  const [isRefresh,setIsRefresh] = useState(false)
   const [message, setMessage] = useState<string>("")
   useEffect(() => {
-    const { data: user }: any = session?.user
-    fetchData('/movies', 'GET', {}, user.token).then((response) => {
+    fetchData('/movies', 'GET' ).then((response) => {
       setMovies(response.data)
     })
-  }, [])
+  }, [session])
   useEffect(() => {
-    const { data: user }: any = session?.user
 
-    fetchData('/movies', 'GET', {}, user.token).then((response) => {
+    fetchData('/movies', 'GET', ).then((response) => {
       setMovies(response.data)
+      setIsRefresh(false)
     })
-  }, [isShownTost])
+  }, [isRefresh])
 
   const handleDelete = async (id: string) => {
     const { data: user }: any = session?.user
@@ -33,6 +33,7 @@ export default function AdminMovies() {
     if (deleted) {
       setIsShownTost(true)
       setMessage('Film Berhasil dihapus')
+      setIsRefresh(true)
     }
   }
   const handleChangeStatus = async (id: string, value: string) => {
@@ -42,6 +43,7 @@ export default function AdminMovies() {
     if (updated) {
       setIsShownTost(true)
       setMessage('Status Berhasil diupdate')
+      setIsRefresh(true)
     }
   }
 
@@ -53,7 +55,7 @@ export default function AdminMovies() {
         <div className="flex justify-start">
           <Button text="Buat Film Baru" isLink={true} path="/admin/movies/create" />
         </div>
-        <Table data={[...movies]} service="movies" columns={['title', 'description', 'age_rating', 'release_date', 'ticket_price']} onDelete={(id: any) => handleDelete(id)} onChangeStatus={(id: string, value: string) => handleChangeStatus(id, value)} />
+        <Table data={[...movies]} service="movies" columns={['title', 'age_rating', 'release_date', 'ticket_price']} onDelete={(id: any) => handleDelete(id)} onChangeStatus={(id: string, value: string) => handleChangeStatus(id, value)} />
       </div>
     </>
   )

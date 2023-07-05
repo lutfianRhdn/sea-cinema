@@ -24,9 +24,7 @@ export default function Navbar() {
   ]
   const dropdownLinks = [
     { href: '/transactions', title: 'transaksi', icon: faFileInvoiceDollar },
-    { href: '/edit-profile', title: 'Edit Profile', icon: faUserPen },
     { href: '/my-tickets', title: "tiket ku", icon: faTicketAlt }
-    // { href: '/logout', title: 'Keluar', icon: faRightFromBracket },
   ]
   const [dropdownIsOpen, setDropdownIsOpen] = useState<boolean>(false)
   const [activeLink, setActiveLink] = useState<string>('')

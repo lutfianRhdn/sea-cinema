@@ -10,11 +10,10 @@ import { fetchData } from "@/utils";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
-import validate from "./validation";
 export default function Order({ params }: any) {
   const [selectedSeats, setselectedSeats]: any = useState<string[]>([])
   const [selectedTime, setselectedTime]: any = useState<string>("")
-  const [isShownTost, setIsShownTost] = useState<boolean>(true)
+  const [isShownTost, setIsShownTost] = useState<boolean>(false)
   const [tostType, setTostType] = useState<'success' | 'error' | 'info' | 'warning'>("info")
   const [tostMessage, setTostMessage] = useState<string>("")
   const [shownTimes, setShownTimes]: any = useState<MovieTimes>()
@@ -33,17 +32,20 @@ export default function Order({ params }: any) {
       fetchData(`/shown_times/${movie.id}`, 'GET',).then(res => {
         setShownTimes(res.data)
       })
-      const { data }: any = session?.user
-      if (data.age < movie.age_rating) {
-        setIsShownTost(true)
-        setTostMessage("Film Ini dibatasi usia")
-        setTimeout(() => {
-          redirect('/movies')
-        }, 5000)
+      if (!!session) {
+
+        const { data }: any = session?.user
+        if (data.age < movie.age_rating) {
+          setIsShownTost(true)
+          setTostMessage("Film Ini dibatasi usia")
+          setTimeout(() => {
+            redirect('/movies')
+          }, 5000)
+        }
       }
     });
 
-  }, [])
+  }, [session])
 
 
   const generateSeats = () => {
@@ -82,13 +84,24 @@ export default function Order({ params }: any) {
     setselectedTime(time)
     setUnavailable_seats(shownTimes.unavailable_seats_times.find((item: any) => item.time === time).seats)
   }
-  const handleOrder = () => {
-    const isDoesntValid = validate({ seats: selectedSeats, time: selectedTime })
-    if (Object.keys(isDoesntValid).length > 0) {
-      setTostMessage(isDoesntValid.message)
+  const handleOrder = async () => {
+    if (!selectedTime) {
+      setTostMessage('tolong pilih jam tayang');
       setIsShownTost(true)
       return
     }
+    if (selectedSeats.length <= 0) {
+
+      setTostMessage('tolong pilih kursi');
+      setIsShownTost(true)
+      return
+    }
+    if (selectedSeats.length > 6) {
+      setTostMessage('maksimal 6 kursi');
+      setIsShownTost(true)
+      return
+    }
+
     const data: Transaction = {
       movie_id: movies.id,
       time: selectedTime,
