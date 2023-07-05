@@ -16,11 +16,10 @@ SEA CINEMA is a website designed to facilitate ticket booking for movies and pro
 ## Table of Content
 
  - [How to Install and Run the Project](#How-to-Install-and-Run-the-Project)
- - [How to Use the Project](https://github.com/matiassingers/awesome-readme)
- - [Credits](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
- - [License](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
-- [Badges](https://a.com)
-- [How to Contribute to the Project](https://a.com)
+ - [How to Use the Project](#How-to-Use-the-Project)
+ - [Credits](#Credits)
+ - [License](#license)
+- [How to Contribute to the Project](#How-to-Contribute-to-the-Project)
 
 
     
