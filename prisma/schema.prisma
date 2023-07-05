@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  username  String    @unique
+  name      String
+  password  String    @map("password")
+  age       Int      
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  balance  Int       @default(0)
+  role      UserRole  @default(user)
+  transactions Transaction[]
+}
+enum UserRole {
+  admin
+  user
+}
+
+model Movie_time{
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  movie_id  String  @db.ObjectId @unique 
+  unavailable_seats_times unavailable_seats_times[]
+  status    MovieTimeStatus @default(not_yet)
+  movie Movie @relation(fields: [movie_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+type unavailable_seats_times {
+  time String
+  seats String[]
+}
+enum MovieTimeStatus {
+  playing
+  not_yet
+  finished
+
+}
+model Ticket{
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  ticket_code   String   @unique 
+  // user_id  String  @db.ObjectId
+  seats         String
+  transaction_id  String @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  transaction Transaction @relation(fields: [transaction_id], references: [id])
+  // shown_times Movie_time @relation(fields: [show_time_id], references: [id])
+}
+
+model Transaction{
+  id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+  transaction_code    String    @unique 
+  user_id             String    @db.ObjectId 
+  tickets             Ticket[]
+  movie_time_id       String?    @db.ObjectId
+  seats               String[]
+  movie_id            String?    @db.ObjectId
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  time                String?
+  type                TransactionType
+  total_amount              Int
+  user User @relation(fields: [user_id], references: [id])
+  // movie_times 
+  movie Movie? @relation(fields: [movie_id], references: [id])
+  // ticket Ticket[]
+}
+
+model Movie{
+  id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+  title               String
+  description         String
+  poster_url          String
+  age_rating          Int
+  ticket_price        Int
+  release_date        String
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  movie_times         Movie_time?
+  transactions        Transaction[]
+
+}
+enum TransactionType {
+  topup
+  buy
+  withdraw
+}

@@ -1,3 +1,10 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "next/no-img-element": "off",
+    "react/react-in-jsx-scope": "off",
+    "next/next/no-async-client-components": "off",
+    "react-hooks/rules-of-hooks":"off"
+  }
 }
+/* eslint-disable @next/next/no-img-element */
