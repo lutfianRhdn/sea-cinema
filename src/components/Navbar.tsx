@@ -64,12 +64,12 @@ export default function Navbar() {
                   )}
                   <li>
                     <Menu>
-                      <Menu.Button className="w-full justify-center rounded-md  bg-opacity-20 text-sm font-medium hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75" onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>
+                      <Menu.Button className="w-full justify-center rounded-md  bg-opacity-20 text-sm font-medium hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white  focus-visible:ring-opacity-75" onClick={() => setDropdownIsOpen(!dropdownIsOpen)}>
                         {user.name || 'User'}
                         <FontAwesomeIcon icon={dropdownIsOpen ? faCaretUp : faCaretDown} className="ml-2" />
                       </Menu.Button>
 
-                      <Menu.Items className="absolute  mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute  mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                         <Menu.Item>
                           <div className="w-full py-5 bg-white">
                             <div className="flex flex-col items-center justify-center h-full">

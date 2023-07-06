@@ -42,7 +42,7 @@ export default  function Trasaction() {
       <h1 className="text-2xl font-semibold">Riwayat Transaksi</h1>
       <div className="flex flex-col gap-5 my-4">
         {transactions && transactions.map((transaction: any, index: number) => (
-          <TransactionCard title={transaction.type} key={index} icon={transaction.type === "Isi Saldo" || transaction.type === "Tarik Saldo"?faWallet:faMoneyBills} subtitle={transaction.type === 'buy' ? `${transaction.movie.title} - ${transaction.time}` : `${transaction.total_amount}`} />
+          <TransactionCard title={transaction.type} key={index} icon={transaction.type === "Isi Saldo" || transaction.type === "Tarik Saldo" ? faWallet : faMoneyBills} subtitle={transaction.type === 'Beli Tiket' || transaction.type === 'Pengembalian Tiket' ? ` Rp.${transaction.total_amount} - ${transaction.movie.title} - ${transaction.type === 'Pengembalian Tiket' ? 'Kursi '+transaction.seats :transaction.time} ` : `Rp.${transaction.total_amount}`} />
 
         ))}
       </div>

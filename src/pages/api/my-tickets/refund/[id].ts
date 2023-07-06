@@ -12,16 +12,19 @@ export default async function handler(
   console.log(req.method)
   const ticket = await prisma.ticket.findUnique({ where: { id },include:{transaction:{include:{movie:true}}} })
   if(userJWT.id !==ticket?.transaction.user_id)return response(res,400,'invalid account') 
-   await prisma.ticket.delete({ where: { id } })
   const totalAmount = ticket?.transaction.movie?.ticket_price || 0
-   await prisma.transaction.create({
+  await prisma.transaction.create({
     data: {
       total_amount: +totalAmount,
       type: 'refund',
       transaction_code: randomUUID().toString(),
-      user_id:userJWT.id
+      user_id: userJWT.id,
+      movie_id: ticket?.transaction.movie_id,
+      time: ticket?.transaction.time,
+      seats: ticket?.seats,
     }
   })
+  await prisma.ticket.delete({ where: { id } })
   await prisma.user.update({
     where: { id: userJWT.id },
     data: {
