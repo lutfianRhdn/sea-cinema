@@ -15,6 +15,7 @@ export default async function handler(
         age_rating,
         release_date,
         ticket_price,
+        movie_time:times,
       } = req.body;
       const movie = await prisma.movie.create({
         data: {
@@ -29,7 +30,13 @@ export default async function handler(
       await prisma.movie_time.create({
         data: {
           movie_id: movie.id,
+          status: 'not_yet',
+          unavailable_seats_times: times.split(';').map((time: string) => ({
+            time,
+            seats: [],
+          })),
         },
+
       });
       return response(res, 200, 'success create new movie', movie);
     default:

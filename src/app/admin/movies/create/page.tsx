@@ -18,7 +18,7 @@ export default function CreateMovies() {
     const { data }: any = session?.user
 
     const movie = await fetchData('/movies/create', 'POST', inputs, data.token)
-    if (movie) push('/admin/movie')
+    if (movie) push('/admin/movies')
   }
   return (
     <>
@@ -31,6 +31,7 @@ export default function CreateMovies() {
           <InputForm name="ticket_price" text="Harga Tiket" style="light" onChange={(value: string) => handleChange(value, 'ticket_price')} value={inputs.ticket_price} type="number" placeholder="Harga Tiket" />
           <InputForm name="title" text="Link Poster " style="light" onChange={(value: string) => handleChange(value, 'poster_url')} value={inputs.poster_url} type="url" placeholder="Link Poster" />
           <InputForm name="title" text="Tanggal Rilis " style="light" onChange={(value: string) => handleChange(value, 'release_date')} value={inputs.release_date} type="date" placeholder="Tanggal Rilis" />
+          <InputForm name="movie_time" text="Jam Penayangan " style="light" onChange={(value: string) => handleChange(value, 'movie_time')} value={inputs.movie_time} type="text" placeholder="17.00;18.00" />
           <InputForm name="title" text="Deskripsi " style="light" onChange={(value: string) => handleChange(value, 'description')} value={inputs.description} type="text" placeholder="Deskripsi" />
           <div>
             <Button text="Buat Film" type="submit" className="bg-blue-500" />

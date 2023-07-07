@@ -12,11 +12,14 @@ export default async function handler(
       if (id !== undefined)
         movies = await prisma.movie.findFirst({
           where: { id: id.toString() },
-          include: {},
+          include: {movie_times:true},
         });
       else
         movies = await prisma.movie.findMany({
           include: { movie_times: true },
+          orderBy: {
+            createdAt: 'desc',
+          },
         });
       return response(res, 200, 'success get data', movies);
     default:

@@ -6,7 +6,6 @@ import Tost from "./Tost";
 
 
 export default function Table({ data, columns, service, onDelete, onChangeStatus }: any) {
-  const { data: session } = useSession()
 
   const [isDeleted, setIsDeleted] = useState(false)
   return (

@@ -81,6 +81,7 @@ export default async function handler(
           unavailable_seats_times: unavailable_seats_times_updated,
         },
       });
+      
 
       response(res, 200, `Berhasil Booking Film `, {});
     default:
