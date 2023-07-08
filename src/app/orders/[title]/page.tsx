@@ -8,7 +8,7 @@ import { Movies } from "@/constants/Movies";
 import { Transaction } from "@/constants/Transaction";
 import { fetchData } from "@/utils";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 export default function Order({ params }: any) {
   const [selectedSeats, setselectedSeats]: any = useState<string[]>([])
@@ -19,6 +19,7 @@ export default function Order({ params }: any) {
   const [shownTimes, setShownTimes]: any = useState<MovieTimes>()
   const [movies, setMovies]: any = useState<Movies>()
   const { data: session } = useSession()
+  const {push} = useRouter()
 
   const [unavailable_seats, setUnavailable_seats]: any = useState<string[]>([])
   const { title } = params
@@ -39,7 +40,7 @@ export default function Order({ params }: any) {
           setIsShownTost(true)
           setTostMessage("Film Ini dibatasi usia")
           setTimeout(() => {
-            redirect('/movies')
+            push('/movies')
           }, 5000)
         }
       }
@@ -113,6 +114,9 @@ export default function Order({ params }: any) {
       setIsShownTost(true)
       setTostType(res.status === 200 ? "success" : "error")
       setTostMessage(res.message)
+      if(res.status === 200){
+        push('/my-tickets')
+      }
     }).catch(err => {
       setIsShownTost(true)
       setTostType("error")
@@ -125,9 +129,9 @@ export default function Order({ params }: any) {
 
       <div className="flex flex-col gap-5">
 
-        <div className="flex flex-row w-full  h-52 bg-white shadow-lg rounded-lg p-5">
-          <img src={movies?.poster_url || ''} alt="" />
-          <div className="ml-5 flex  flex-1 flex-col justify-between">
+        <div className="flex md:flex-row flex-col w-full  h-full bg-white shadow-lg rounded-lg p-5">
+          <img src={movies?.poster_url || ''} alt="" className="h-52" />
+          <div className="md:ml-5 flex  flex-1 flex-col justify-between">
             <div>
               <p className="text-black uppercase text-xl font-bold  mt-4">
                 {movies?.title}
@@ -145,7 +149,7 @@ export default function Order({ params }: any) {
               </p>
 
 
-              <div className="flex gap-5">
+              <div className="flex gap-5 flex-wrap">
                 {shownTimes?.unavailable_seats_times && shownTimes.unavailable_seats_times.map((times: any, index: number) => (
                   <button className={`${selectedTime == times.time ? "bg-gray-400 " : "bg-gray-200"} px-6 rounded-lg py-1`} key={index} onClick={() => handleTime(times.time)}>
                     <p>{times.time}</p>
@@ -158,14 +162,15 @@ export default function Order({ params }: any) {
             <Button text="Pesan" isLink={false} onClick={() => handleOrder()} className="mt-5" />
           </div>
         </div>
-        <div className="flex flex-col w-full p-10 h-full bg-gray-800 items-center justify-center gap-14">
+        <div className="overflow-x-auto">
+        <div className="flex flex-col p-10 h-full bg-gray-800 items-center justify-center gap-14 w-[112rem] ">
           <div className="bg-white h-8 w-3/4 flex items-center justify-center">
             <p className="text-black uppercase text-center  font-bold ">
               Screen
             </p>
           </div>
-          <div className="flex flex-row  items-center justify-center gap-2">
-            <div className="flex flex-row gap-10 flex-wrap items-center justify-center">
+          <div className="flex flex-row  items-center justify-center gap-2 ">
+            <div className="flex flex-row gap-10 flex-wrap items-center justify-center  ">
 
               {selectedTime && generateSeats().map((seat: string, index: number) => (
                 <button type="button" key={index + 1} className={`${selectedSeats.find((item: string) => item === seat) ? 'bg-red-400' : (seatsIsAvailable(seat) ? 'bg-gray-500' : 'bg-white')} w-16 h-16 rounded-lg flex justify-center items-center`} disabled={seatsIsAvailable(seat)} onClick={() => handlerSeat(seat)}>
@@ -173,6 +178,7 @@ export default function Order({ params }: any) {
                 </button>
               ))}
             </div>
+          </div>
           </div>
         </div>
         <div>

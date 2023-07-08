@@ -33,7 +33,7 @@ export default function RootLayout({
       <body className={`${inter.className}  bg-gray-100`} suppressHydrationWarning={true}  >
         <SessionProvider >
           <Navbar />
-          <main className="mx-[4rem] my-4">
+          <main className="md:mx-[4rem] mx-[2rem] my-4">
             {children}
           </main>
         </SessionProvider>

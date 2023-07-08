@@ -2,6 +2,7 @@
 'use client'
 import Button from "@/components/Button";
 import Tost from "@/components/Tost";
+import config from "@/configs";
 import { fetchData } from "@/utils";
 import { useSession } from "next-auth/react";
 import { useQRCode } from "next-qrcode";
@@ -12,7 +13,8 @@ export default function MyTickets() {
   const [tickets, setTickets] = useState([])
   const { data: session } = useSession()
   const [isRefresh, setIsRefresh] = useState(false)
-  const [isShownTost,setIsShownTost] = useState(false)
+  const [isShownTost, setIsShownTost] = useState(false)
+  const [url , setUrl] = useState('')
   const { Canvas } = useQRCode();
   useEffect(() => {
     if(!!!session)return
@@ -20,13 +22,13 @@ export default function MyTickets() {
     fetchData('/my-tickets', 'GET', {}, user.token).then(res => {
       setTickets(res.data)
     })
+    setUrl(config.NEXT_PUBLIC_BASE_URL)
+
     setIsRefresh(false)
   }, [session,isRefresh])
   const handleRefund = async (id: string) => {
     const { data: user }: any = session?.user
-    console.log('refund')
     const response = await fetchData(`/my-tickets/refund/${id}`, "POST", {}, user.token)
-    console.log(response)
     if (response) { 
       setIsRefresh(true)
       setIsShownTost(true)
@@ -41,21 +43,20 @@ export default function MyTickets() {
           {tickets.map((ticket: any, index: number) => (
             <div key={index} className="">
 
-              <div className="w-96  gap-5   rounded-xl shadow-lg">
+              <div className="w-full gap-5 rounded-xl shadow-lg">
 
                 {/* body */}
                 <div className="min-h-[20rem] px-5 py-3 bg-white w-full rounded-t-2xl ">
                   <div className="flex flex-col  ">
                     <div className="flex flex-row justify-between items-center gap-5">
                       <div className="flex">
-                        {/* <img src={ ticket.transaction.movie.poster_url} className="w-5 "  alt="" ></img> */}
                         <h1 className="text-2xl font-semibold">Movie: {ticket.transaction.movie.title}</h1>
                       </div>
                       <p className="text-sm">{new Date(ticket.createdAt).toDateString()}</p>
                     </div>
                     <div className="flex flex-col justify-center  items-center mt-5 ">
                       <Canvas
-                        text={{ code: ticket.ticket_code }.toString()}
+                        text={`${url}/my-tickets/${ticket.ticket_code }`}
                         options={{
                           level: 'M',
                           margin: 1,

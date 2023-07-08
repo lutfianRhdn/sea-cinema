@@ -16,14 +16,14 @@ export default async function MoviePage({ params }: any) {
     <>
       <div className="flex justify-center items-center h-screen ">
 
-        <div className="flex md:grid-cols-2 max-h-96  ">
+        <div className="flex md:grid-cols-2 max-h-96  h-full ">
           <div className="max-h-96 md:h-screen">
             <img className="h-full object-top" src={data.poster_url} alt="" />
           </div>
-          <div className="flex bg-white  p-10">
+          <div className="flex bg-white  md:p-10 px-5 py-2 h-full">
             <div className="mb-auto mt-auto max-w-lg">
-              <h1 className="text-3xl uppercase">{data.title}</h1>
-              <p className="font-semibold mb-5">Rp.{data.ticket_price}</p>
+              <h1 className="md:text-3xl text-xl font-bold uppercase">{data.title}</h1>
+              <p className="font-semibold text-md md:mb-5">Rp.{data.ticket_price}</p>
               <p className="font-semibold mb-5">Age Rating: {data.age_rating}</p>
               <p>{data.description}</p>
               {data.movie_times.status === 'playing' && (

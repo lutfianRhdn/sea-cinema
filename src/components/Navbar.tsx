@@ -19,7 +19,7 @@ export default function Navbar() {
     }
   }, [session])
   const links = [
-    { title: 'Home', href: '/' },
+    // { title: 'Home', href: '/' },
     { title: 'Movies', href: '/movies' },
   ]
   const dropdownLinks = [
@@ -37,13 +37,14 @@ export default function Navbar() {
   return (
     <>
 
-      <nav className="bg-white  px-2 py-4 mb-10">
+      <nav className="bg-white    px-2 py-4 mb-10">
         <div className="container mx-auto flex flex-wrap items-center justify-between">
-          <a href="#" className="flex">
+          <a href="/" className="flex">
             <span className="self-center text-lg font-semibold whitespace-nowrap">SEA Movie</span>
           </a>
-          <div className="hidden md:flex justify-between items-center w-full md:w-auto md:order-1" id="mobile-menu-3">
-            <ul className="flex-col md:flex-row flex md:space-x-8 mt-4 md:mt-0 md:text-sm md:font-medium">
+            
+          <div className="flex justify-between items items-center w-auto mt-3 md:mt-0 order-1" id="mobile-menu-3">
+            <ul className="flex-row  flex items-center justify-between space-x-8 text-sm font-medium">
               {links.map((link, index) => (
                 <li key={index}>
                   <Link href={link.href} className={`${activeLink.toUpperCase() == link.href.toUpperCase() ? 'bg-blue-700 text-white ' : ''} pl-3 pr-4 py-2 rounded`} aria-current="page">{link.title}</Link>
@@ -69,7 +70,7 @@ export default function Navbar() {
                         <FontAwesomeIcon icon={dropdownIsOpen ? faCaretUp : faCaretDown} className="ml-2" />
                       </Menu.Button>
 
-                        <Menu.Items className="absolute  mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                        <Menu.Items className="absolute  mt-2 w-56  right-10 divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                         <Menu.Item>
                           <div className="w-full py-5 bg-white">
                             <div className="flex flex-col items-center justify-center h-full">
@@ -79,7 +80,8 @@ export default function Navbar() {
                               <div className="flex gap-5 mt-5">
                                 <div className="mt-2 ">{user.name || 'name'} </div>
                                 <div className="mt-2 ">@{user.username || 'username'}</div>
-                              </div>
+                                </div>
+                                <div className="mt-2">Age:{ user.age} </div>
                               <div className="mt-2  ">Rp.{user.balance}</div>
                               <div className="flex justify-between gap-4">
                                 {/* <Button text="Top Up" isLink={true} path="/" /> */}
