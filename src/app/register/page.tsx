@@ -43,11 +43,11 @@ export default function Register() {
   }
   return (
     <>
-      <div className="flex justify-center items-center h-screen mx-auto">
+      <div className="flex justify-center items-center md:h-screen mx-auto">
         <div
-          className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700 min-w-[24rem]">
+          className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 min-w-[24rem]">
           <form className="space-y-6 " onSubmit={handleSubmit}>
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">Register</h3>
+            <h3 className="text-xl font-medium text-gray-900 ">Register</h3>
             <InputForm name="username" placeholder="plase type your name" text="name" value={inputs.name} onChange={(value: string) => handleChange(value, 'name')} errorMessage={errors.username} />
             <InputForm name="username" placeholder="plase type usernmae" text="username" value={inputs.username} onChange={(value: string) => handleChange(value, 'username')} errorMessage={errors.username} />
             <InputForm name="age" placeholder="plase type your age" text="age" type="number" value={inputs.age} onChange={(value: string) => handleChange(value, 'age')} errorMessage={errors.age} />
