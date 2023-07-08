@@ -9,7 +9,7 @@ export default function Card({ ...props }: Movies) {
     <>
 
       <div className="py-2  mb-20 w-full">
-        <div className="bg-white shadow-lg border-gray-100 min-w-[20rem] w-full max-w-[35rem] max-h-96	 border sm:rounded-3xl p-8 flex space-x-8">
+        <div className="bg-white shadow-lg border-gray-100 min-w-[20rem] md:min-w-[31rem] w-full max-w-[35rem] max-h-96	 border sm:rounded-3xl p-8 flex space-x-8">
           <div className="h-28   overflow-visible w-2/6">
             <img className="rounded-3xl shadow-lg" src={props.poster_url} alt="" />
           </div>
