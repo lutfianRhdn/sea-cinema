@@ -19,15 +19,7 @@ SEA CINEMA is a website designed to facilitate ticket booking for movies and pro
  - [How to Use the Project](#How-to-Use-the-Project)
  - [Credits](#Credits)
  - [License](#license)
-- [How to Contribute to the Project](#How-to-Contribute-to-the-Project)
-
-
-    
-    
-    
-    
-    
-    
+ - [How to Contribute to the Project](#How-to-Contribute-to-the-Project)
 
 ## How to Install and Run the Project
 To install and run the SEA CINEMA project locally, please follow these steps:
@@ -73,6 +65,16 @@ or
   yarn dev
 ```
 Access the website locally at http://localhost:3000.
+
+
+## Demo
+You can access the demo at https://sea-cinema.lutfianrhdn.me
+
+| **Role** | **Username**| **Password** |
+| :---: | :-----------: | :----------------------: |
+| Admin| admin | password |
+| User | user  | password |
+
 
 ## How to Use the Project
 
