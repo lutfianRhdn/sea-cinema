@@ -54,6 +54,16 @@ Copy example environment file to new file
   cp .env.example .env
 ```
 
+Generate Prisma Client.
+```bash
+  npx prisma generate
+```
+
+Push Database Schema.
+```bash
+  npx prisma db push
+```
+
 Run the development server.
 ```bash
   npm run dev
