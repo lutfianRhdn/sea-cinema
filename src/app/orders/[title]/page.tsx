@@ -19,7 +19,7 @@ export default function Order({ params }: any) {
   const [shownTimes, setShownTimes]: any = useState<MovieTimes>()
   const [movies, setMovies]: any = useState<Movies>()
   const { data: session } = useSession()
-  const {push} = useRouter()
+  const {push, refresh} = useRouter()
 
   const [unavailable_seats, setUnavailable_seats]: any = useState<string[]>([])
   const { title } = params
@@ -41,7 +41,7 @@ export default function Order({ params }: any) {
           setTostMessage("Film Ini dibatasi usia")
           setTimeout(() => {
             push('/movies')
-          }, 5000)
+          }, 1000)
         }
       }
     });
@@ -114,7 +114,8 @@ export default function Order({ params }: any) {
       setIsShownTost(true)
       setTostType(res.status === 200 ? "success" : "error")
       setTostMessage(res.message)
-      if(res.status === 200){
+      if (res.status === 200) {
+        window.location.reload()
         push('/my-tickets')
       }
     }).catch(err => {
