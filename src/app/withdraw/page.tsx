@@ -4,12 +4,14 @@ import InputForm from "@/components/InputForm";
 import Tost from "@/components/Tost";
 import { fetchData } from "@/utils";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function WithDraw() {
   const [inputs, setInputs]: any = useState<object>({})
   const [isShownTost,setIsShownTost] = useState(false)
   const { data: session } = useSession()
+  const router = useRouter()
 
   const handleChange = (value: string | number) => {
     setInputs({
@@ -21,7 +23,11 @@ export default function WithDraw() {
     e.preventDefault()
     const { data: user }: any = session?.user
     const response = await fetchData('/user/withdraw', 'POST', inputs, user.token )
-    if(response) setIsShownTost(true)
+    if (response) {
+      setIsShownTost(true)
+      window.location.reload()
+
+    }
   }
   return (
     <>

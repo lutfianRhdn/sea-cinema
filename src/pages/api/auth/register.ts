@@ -15,7 +15,8 @@ export default async function handler(
       return response(res, 400, 'error', {
         message: 'data tidak boleh kosong',
       });
-
+    const user = await prisma.user.findFirst({ where: { username } });
+    if (user) return response(res, 400, 'error', { message: 'user sudah ada' });
     if (typeof +age !== 'number')
       return response(res, 400, 'error', { message: 'age harus number' });
     const users = await prisma.user.create({

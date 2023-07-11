@@ -19,7 +19,6 @@ export default function Navbar() {
     }
   }, [session])
   const links = [
-    // { title: 'Home', href: '/' },
     { title: 'Movies', href: '/movies' },
   ]
   const dropdownLinks = [
