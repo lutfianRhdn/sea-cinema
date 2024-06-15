@@ -1,5 +1,5 @@
 
-# SEA CINEMA
+# SEA CINEMA v2
 
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)
 
